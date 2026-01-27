@@ -6,9 +6,9 @@ My solutions to [Advent of Code 2025](https://adventofcode.com/2025) - in Python
 
 #### Progress:
 Python:
-[x] Days 1 - 4
-[ ] Day  5
+- [x] Days 1 - 4
+- [ ] Day  5
 
 C++:
-[x] Days 1
-[ ] Day  2
+- [x] Days 1
+- [ ] Day  2
