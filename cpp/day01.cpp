@@ -2,7 +2,6 @@
 #include <fstream>
 #include <vector>
 
-
 void read_input(const std::string filepath, std::vector<int> & data) {
     std::ifstream inFile(filepath);
     std::string val;
@@ -16,11 +15,6 @@ void read_input(const std::string filepath, std::vector<int> & data) {
                 data.push_back(- std::stoi(val.substr(1)));
             }
         }
-        
-        // see cppreference:
-        // default-constructor of istream_iterator is end-of-stream iterator
-        // std::istream_iterator<int> start(inFile), end;
-        // modules.assign(start, end);
     } else { std::println("ERROR: could not open file"); }
 }
 
@@ -28,7 +22,10 @@ void read_input(const std::string filepath, std::vector<int> & data) {
  * On a dial 0-99, counts how often the 0 is passed if the dial is turned by the values in
  * `clicks`, and how often the dial stops at 0, given it is initiated at the value 50.
  * 
- * @param clicks list of values by which to turn the dial 
+ * @param clicks: list of values by which to turn the dial
+ * @param pos_init: initial position of dial
+ * @param zero_cnt: counts how often dial stops at zero position
+ * @param zero_passed_cnt: counts how often dial passes zero position without stopping
 */
 void cnt_zeros(
     const std::vector<int> & clicks,
@@ -59,7 +56,7 @@ void cnt_zeros(
 }
 
 int main() {
-    std::string filepath = "./input/input01.txt";
+    std::string filepath = "../input/input01.txt";
     std::vector<int> clicks;
 
     read_input(filepath, clicks);
