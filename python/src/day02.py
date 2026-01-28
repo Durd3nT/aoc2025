@@ -58,7 +58,9 @@ def brute_multi_pattern(start, end):
             num_str = str(a)
             len_str = len(num_str)
             for k in range(2, len_str + 1):
-                if len_str % k == 0 and num_str == k * num_str[:len_str//k]:
+                if not len_str % k == 0:
+                    continue
+                if num_str == k * num_str[:len_str//k]:
                     invalid.add(a)
     return invalid
 
