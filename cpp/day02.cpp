@@ -5,8 +5,33 @@
 #include <ranges>
 #include <string>
 #include <numeric>
+#include <cmath>
 
 #include "aoc_utils.hpp"
+
+
+// lookup table for integer powers of 10
+static constexpr long long pow10[] = {
+    1LL,
+    10LL,
+    100LL,
+    1'000LL,
+    10'000LL,
+    100'000LL,
+    1'000'000LL,
+    10'000'000LL,
+    100'000'000LL,
+    1'000'000'000LL,
+    10'000'000'000LL,
+    100'000'000'000LL,
+    1'000'000'000'000LL,
+    10'000'000'000'000LL,
+    100'000'000'000'000LL,
+    1'000'000'000'000'000LL,
+    10'000'000'000'000'000LL,
+    100'000'000'000'000'000LL,
+    1'000'000'000'000'000'000LL
+};
 
 void read_input(const std::string filepath, std::vector<std::vector<long long>> & data) {
     std::ifstream inFile(filepath);
@@ -23,6 +48,42 @@ void read_input(const std::string filepath, std::vector<std::vector<long long>> 
     } else { std::println("ERROR: could not open file"); }
 }
 
+int digit_cnt(long long number) {
+    int digits = 0;
+    do { number /= 10; digits++; } while (number != 0);
+    return digits;
+}
+
+bool int_pattern_repeats(const long long number, const int max_repeats) {
+    int len = digit_cnt(number);
+    int num_repeats = max_repeats;
+    if (max_repeats > len or max_repeats < 0) {
+        num_repeats = len;
+    }
+
+    for (const int & k: std::views::iota(2, num_repeats + 1)) {
+        // k = number of repeating blocks
+        if (len % k != 0) {
+            continue;
+        }
+
+        int block_len = len / k;
+        long long block = number / pow10[(len - block_len)];
+        long long block_pow = pow10[block_len];
+
+        long long rebuilt_number = 0;
+        for (int i = 0; i < k; i++) {
+            rebuilt_number = block + rebuilt_number * block_pow;
+        }
+
+        if (rebuilt_number == number) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 /** 
  * Filters ranges of integers for integers consisting of repeated blocks of numbers, e.g.,
  * 212121, 13451345, 111, etc. max repeats. The function returns the sum of all found integers.
@@ -31,6 +92,29 @@ void read_input(const std::string filepath, std::vector<std::vector<long long>> 
  * @param max_repeats: maximum repetitions of blocks / patterns we look for in all strings.
  *  If negative, it is set to the number of digits in the integer
 */
+long long find_patterns(
+    const std::vector<std::vector<long long>> & ranges,
+    const int & max_repeats
+) {
+    std::unordered_set<long long> invalid;
+    
+    for (const auto & range: ranges) {
+        for (long long i: std::views::iota(range[0], range[1] + 1)) {
+            bool repeats = int_pattern_repeats(i, max_repeats);
+            if (repeats) {
+                invalid.insert(i);
+            }
+        }
+    }
+
+    long long sum = std::accumulate(invalid.begin(), invalid.end(), 0LL); // init (0) has to be long long too
+
+    return sum;
+}
+
+/**
+ * Same as `find_patterns`, but working on strings rather than integers.
+ */
 long long find_string_patterns(
     const std::vector<std::vector<long long>> & ranges,
     const int & max_repeats
@@ -43,15 +127,15 @@ long long find_string_patterns(
             std::string_view s = std::string_view(ss);
             int len = s.length();
             int repeats = max_repeats;
-
             if (max_repeats > len or max_repeats < 0) {
                 repeats = len;
             }
             
             for (const int & k: std::views::iota(2, repeats + 1)) {
                 // k = number of repeating blocks
-                if (len % k != 0)
+                if (len % k != 0) {
                     continue;
+                }
 
                 bool blocks_match = true;
                 int block_len = len / k;
@@ -68,6 +152,7 @@ long long find_string_patterns(
                 if (blocks_match) {
                     // only if all blocks match the first
                     invalid.insert(i);
+                    break; // no need to test more k on the same string
                 }
             }
         }
@@ -84,8 +169,9 @@ int main() {
     read_input(filepath, ranges);
 
     long long sum_double_invalids, sum_all_invalids;
-    sum_double_invalids = find_string_patterns(ranges, 2);
-    sum_all_invalids = find_string_patterns(ranges, -1);
+
+    sum_double_invalids = find_patterns(ranges, 2);
+    sum_all_invalids = find_patterns(ranges, -1);
 
     std::println("sum of IDs with double patterns (part 1): {}", sum_double_invalids);
     std::println("sum of IDs with multi patterns (part 2): {}", sum_all_invalids);
