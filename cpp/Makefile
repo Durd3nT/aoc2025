@@ -2,9 +2,8 @@ CXX = g++
 CXXFLAGS += --std=c++23
 CXXFLAGS += -Wall -Wextra -Wpedantic
 
-
-day$(NUM).exe: day$(NUM).cpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+day$(NUM).exe: day$(NUM).cpp aoc_utils.cpp
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 run: day$(NUM).exe
 	./day$(NUM).exe
