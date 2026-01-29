@@ -11,7 +11,7 @@
 
 
 // lookup table for integer powers of 10
-static constexpr long long pow10[] = {
+static constexpr int64_t pow10[] = {
     1LL,
     10LL,
     100LL,
@@ -33,7 +33,7 @@ static constexpr long long pow10[] = {
     1'000'000'000'000'000'000LL
 };
 
-void read_input(const std::string filepath, std::vector<std::vector<long long>> & data) {
+void read_input(const std::string filepath, std::vector<std::vector<int64_t>> & data) {
     std::ifstream inFile(filepath);
     std::string val;
 
@@ -42,36 +42,36 @@ void read_input(const std::string filepath, std::vector<std::vector<long long>> 
             std::vector<std::string> range_list = split(val, ",");
             for (auto r: range_list) {
                 std::vector<std::string> range = split(r, "-");
-                data.push_back(std::vector<long long>{std::stoll(range[0]), std::stoll(range[1])});
+                data.push_back(std::vector<int64_t>{std::stoll(range[0]), std::stoll(range[1])});
             }
         }
     } else { std::println("ERROR: could not open file"); }
 }
 
-int digit_cnt(long long number) {
+int digit_cnt(int64_t number) {
     int digits = 0;
     do { number /= 10; digits++; } while (number != 0);
     return digits;
 }
 
-bool int_pattern_repeats(const long long number, const int max_repeats) {
+bool int_pattern_repeats(const int64_t number, const int max_repeats) {
     int len = digit_cnt(number);
     int num_repeats = max_repeats;
     if (max_repeats > len or max_repeats < 0) {
         num_repeats = len;
     }
 
-    for (const int & k: std::views::iota(2, num_repeats + 1)) {
+    for (const int k: std::views::iota(2, num_repeats + 1)) {
         // k = number of repeating blocks
         if (len % k != 0) {
             continue;
         }
 
         int block_len = len / k;
-        long long block = number / pow10[(len - block_len)];
-        long long block_pow = pow10[block_len];
+        int64_t block = number / pow10[(len - block_len)];
+        int64_t block_pow = pow10[block_len];
 
-        long long rebuilt_number = 0;
+        int64_t rebuilt_number = 0;
         for (int i = 0; i < k; i++) {
             rebuilt_number = block + rebuilt_number * block_pow;
         }
@@ -92,14 +92,14 @@ bool int_pattern_repeats(const long long number, const int max_repeats) {
  * @param max_repeats: maximum repetitions of blocks / patterns we look for in all strings.
  *  If negative, it is set to the number of digits in the integer
 */
-long long find_patterns(
-    const std::vector<std::vector<long long>> & ranges,
+int64_t find_patterns(
+    const std::vector<std::vector<int64_t>> & ranges,
     const int & max_repeats
 ) {
-    std::unordered_set<long long> invalid;
+    std::unordered_set<int64_t> invalid;
     
     for (const auto & range: ranges) {
-        for (long long i: std::views::iota(range[0], range[1] + 1)) {
+        for (const int64_t i: std::views::iota(range[0], range[1] + 1)) {
             bool repeats = int_pattern_repeats(i, max_repeats);
             if (repeats) {
                 invalid.insert(i);
@@ -107,7 +107,7 @@ long long find_patterns(
         }
     }
 
-    long long sum = std::accumulate(invalid.begin(), invalid.end(), 0LL); // init (0) has to be long long too
+    int64_t sum = std::accumulate(invalid.begin(), invalid.end(), 0LL); // init (0) has to be long long / int64_t too
 
     return sum;
 }
@@ -115,14 +115,14 @@ long long find_patterns(
 /**
  * Same as `find_patterns`, but working on strings rather than integers.
  */
-long long find_string_patterns(
-    const std::vector<std::vector<long long>> & ranges,
+int64_t find_string_patterns(
+    const std::vector<std::vector<int64_t>> & ranges,
     const int & max_repeats
 ) {
-    std::unordered_set<long long> invalid;
+    std::unordered_set<int64_t> invalid;
     
     for (const auto & range: ranges) {
-        for (const long long & i: std::views::iota(range[0], range[1] + 1)) {
+        for (const int64_t i: std::views::iota(range[0], range[1] + 1)) {
             std::string ss = std::to_string(i);
             std::string_view s = std::string_view(ss);
             int len = s.length();
@@ -131,7 +131,7 @@ long long find_string_patterns(
                 repeats = len;
             }
             
-            for (const int & k: std::views::iota(2, repeats + 1)) {
+            for (const int k: std::views::iota(2, repeats + 1)) {
                 // k = number of repeating blocks
                 if (len % k != 0) {
                     continue;
@@ -157,18 +157,18 @@ long long find_string_patterns(
             }
         }
     }
-    long long sum = std::accumulate(invalid.begin(), invalid.end(), 0LL); // init (0) has to be long long too
+    int64_t sum = std::accumulate(invalid.begin(), invalid.end(), 0LL); // init (0) has to be long long / int64_t too
 
     return sum;
 }
 
 int main() {
     std::string filepath = "../input/input02.txt";
-    std::vector<std::vector<long long>> ranges;
+    std::vector<std::vector<int64_t>> ranges;
 
     read_input(filepath, ranges);
 
-    long long sum_double_invalids, sum_all_invalids;
+    int64_t sum_double_invalids, sum_all_invalids;
 
     sum_double_invalids = find_patterns(ranges, 2);
     sum_all_invalids = find_patterns(ranges, -1);
