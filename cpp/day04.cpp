@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdint>
 #include <ranges>
+#include <numeric>
 
 
 void read_input(const std::string filepath, std::vector<bool> & data, std::vector<int> & dims) {
@@ -29,7 +30,17 @@ void read_input(const std::string filepath, std::vector<bool> & data, std::vecto
 }
 
 /**
- * NOTE STILL BUGGY
+ * Iterates through `roll_coords` dictionary. For every roll, checks all eight neighboring grid
+ * points, counting the number of neighboring rolls. If there are less than four rolls in the
+ * neighborhood of the original roll, this roll is removed from the grid dictionary by setting
+ * its value to False. The method stops when the grid is cleared of all rolls and returns the
+ * number of rolls removed in each iteration.
+ * 
+ * @param coords: coordinate vector of bools indicating whether that there is a roll at the
+ *  respective grid point. This is being modified throughout computation
+ * @param dims: grid dimensions N_x x N_y
+ * @param roll_cnts: the target vector that is populated iteratively, with elements being the
+ *  number of rolls removed at each iteration
  */
 void find_remove_rolls(
     std::vector<bool> & coords,
@@ -37,25 +48,25 @@ void find_remove_rolls(
     std::vector<int> & roll_cnts
 ) {
     std::vector<int> offsets = {-1, 0, 1};
-    std::vector<int> tmp_coords;
     int last_cnt = 1;
     while (last_cnt > 0) {
+        std::vector<int> tmp_coords;
         int cnt = 0;
-        for (const int x: std::views::iota(0, dims[0])) {
-            for (const int y: std::views::iota(0, dims[1])) {
+        for (const int y: std::views::iota(0, dims[1])) {
+            for (const int x: std::views::iota(0, dims[0])) {
                 if (coords[y * dims[0] + x]) {
                     int bool_sum = 0;
-                    for (auto xo: offsets) {
-                        int x_neighb = x + xo;
-                        if (x_neighb < 0) {
+                    for (auto yo: offsets) {
+                        int y_neighb = y + yo;
+                        if ((y_neighb < 0) or (y_neighb >= dims[1])) {
                             continue;
                         }
-                        for (auto yo: offsets) {    
-                            int y_neighb = y + yo;
-                            if (y_neighb < 0 or (xo == 0 and yo == 0)) {
+                        for (auto xo: offsets) {    
+                            int x_neighb = x + xo;
+                            if ((x_neighb < 0) or (x_neighb >= dims[0]) or (xo == 0 and yo == 0)) {
                                 continue;
                             }
-                            bool_sum += coords[yo * dims[0] + xo];
+                            bool_sum += coords[y_neighb * dims[0] + x_neighb];
                             if (bool_sum >= 4) {
                                 goto continue2;
                             }
@@ -80,7 +91,7 @@ void find_remove_rolls(
 }
 
 int main() {
-    std::string filepath = "../input/test04.txt";
+    std::string filepath = "../input/input04.txt";
     std::vector<bool> coords;
     std::vector<int> dims;
 
@@ -88,7 +99,8 @@ int main() {
 
     std::vector<int> roll_cnts;
     find_remove_rolls(coords, dims, roll_cnts);
+    auto tot_roll_cnts = std::reduce(roll_cnts.begin(), roll_cnts.end());
 
     std::println("rolls removed in first iteration (part 1): {}", roll_cnts[0]);
-    std::println("rolls removed in total (part 2): {}", roll_cnts);
+    std::println("rolls removed in total (part 2): {}", tot_roll_cnts);
 }
