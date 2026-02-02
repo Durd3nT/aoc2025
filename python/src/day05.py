@@ -66,7 +66,7 @@ def sort_combine_ranges(ranges):
 
     return combined_ranges
 
-def find_valid_ids(sorted_ranges, sorted_ids):
+def filter_valid_ids(sorted_ranges, sorted_ids):
     valid_ids = []
     num_valid_ids = 0
 
@@ -87,6 +87,14 @@ def find_valid_ids(sorted_ranges, sorted_ids):
 
     return num_valid_ids
 
+def all_valid_ids(sorted_ranges):
+    num_valid_ids = 0
+    
+    for sr in sorted_ranges:
+        num_valid_ids += sr[1] - sr[0] + 1
+
+    return num_valid_ids
+
 if __name__ == "__main__":
     ranges, ids = read_inputs(filepath="../../input/input05.txt")
     range_starts = [x[0] for x in ranges]
@@ -97,8 +105,11 @@ if __name__ == "__main__":
     sorted_ids = [ids[idx] for idx in ids_idx]
     sorted_combined_ranges = sort_combine_ranges(ranges)
 
-    num_valid_ids = find_valid_ids(sorted_combined_ranges, sorted_ids)
+    num_valid_ids = filter_valid_ids(sorted_combined_ranges, sorted_ids)
+
+    num_all_valid_ids = all_valid_ids(sorted_combined_ranges)
 
     print(f"number of valid IDs (part 1): {num_valid_ids}")
+    print(f"number of ALL valid IDs (part 2): {num_all_valid_ids}")
 
     print(f"execution time: {time.time() - start_time}")
