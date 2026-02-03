@@ -44,7 +44,7 @@
 # --- PYTHON ---
 # CUSTOM
 notes
-drafts/*
+drafts
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
