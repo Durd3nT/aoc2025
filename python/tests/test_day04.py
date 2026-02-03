@@ -28,7 +28,7 @@ class TestDay04(unittest.TestCase):
         ["part1", False, 13],
         ["part2", True, 43]
     ])
-    def test_count_zero_passes(self, name, summed, expected):
+    def test_roll_removal(self, name, summed, expected):
         input_strings = day04.read_inputs(filepath="../../input/test04.txt")
         roll_coords = day04.get_roll_coords(input_strings)
         num_rolls = day04.find_remove_isolate_rolls(roll_coords)
