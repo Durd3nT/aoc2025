@@ -95,6 +95,14 @@ std::vector<int64_t> sort_vector(const std::vector<int64_t> & A) {
     return sorted;
 }
 
+/**
+ * Sort and combine ranges from a list of unsorted, overlapping ranges. Sorting is done with the
+ * above quicksort. Alternatively, a built-in function can be used. Sorting and combining the
+ * ranges speeds up the solution for part 1 and enables solution for part 2 with only a handful of lines.
+ * 
+ * @param ranges: list of all, potentially overlapping, ranges
+ * @param combined_ranges: vector to store the resulting ranges
+ */
 void sort_combine_ranges(
     const std::vector<std::vector<int64_t>> & ranges,
     std::vector<std::vector<int64_t>> & combined_ranges
@@ -119,7 +127,10 @@ void sort_combine_ranges(
 }
 
 /**
+ * Counts how many of the IDs in `sorted_ids` fall within one of the (inclusive) ranges.
  * 
+ * @param sorted_ranges: inclusive ranges of valid IDs in ascending order
+ * @param sorted_ids: all IDs
  */
 int64_t filter_valid_ids(
     const std::vector<std::vector<int64_t>> & sorted_ranges,
@@ -147,6 +158,11 @@ int64_t filter_valid_ids(
     return num_valid_ids;
 }
 
+/**
+ * Counts the maximum possible number of valid IDs within the given ranges.
+ * 
+ * @param sorted_ranges: inclusive ranges of valid IDs in ascending order
+ */
 int64_t all_valid_ids(const std::vector<std::vector<int64_t>> & sorted_ranges) {
     int64_t num_valid_ids = 0;
     

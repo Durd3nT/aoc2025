@@ -66,7 +66,7 @@ def quicksort(A, idx_list, low, high):
 def sort_combine_ranges(ranges):
     """
     Sort and combine ranges from a list of unsorted, overlapping ranges. Sorting is done with the
-    above quicksorte. Alternatively, numpy's builtin `argsort` can be used for sorting.
+    above quicksort. Alternatively, numpy's builtin `argsort` can be used for sorting.
     Sorting and combining the ranges speeds up the solution for part 1 and enables solution for
     part 2 with only a handful of lines.
     
@@ -91,7 +91,7 @@ def sort_combine_ranges(ranges):
 
 def filter_valid_ids(sorted_ranges, sorted_ids):
     """
-    Count how many of the IDs in `sorted_ids` fall within one of the (inclusive) ranges.
+    Counts how many of the IDs in `sorted_ids` fall within one of the (inclusive) ranges.
     
     :param sorted_ranges: inclusive ranges of valid IDs in ascending order
     :param sorted_ids: all IDs
@@ -111,14 +111,12 @@ def filter_valid_ids(sorted_ranges, sorted_ids):
             valid_ids.append(sorted_ids[id_cnt])
             num_valid_ids += 1
             id_cnt += 1
-        else:
-            print(sorted_ids[id_cnt], sorted_ranges[range_cnt])
 
     return num_valid_ids
 
 def all_valid_ids(sorted_ranges):
     """
-    Counts how the maximum possible number of valid IDs within the given ranges.
+    Counts the maximum possible number of valid IDs within the given ranges.
     
     :param sorted_ranges: inclusive ranges of valid IDs in ascending order
     """
