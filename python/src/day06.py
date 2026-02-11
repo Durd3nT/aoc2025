@@ -31,6 +31,15 @@ def read_inputs(filepath, columnwise=False):
     return elements
 
 def combine_numbers(elements, columnwise=False):
+    """
+    The puzzle input is a table of numbers of which the columns are to be summed or multiplied
+    together. In part 1, the numbers in each column are read row-wise. In part 2, the numbers
+    in each column are read column-wise. This is done by reading each char from the input file
+    into a matrix and transposing for part 2.
+    
+    :param elements: character matrix from input
+    :param columnwise: whether numbers are read column-wise or not
+    """
     res = 0
     if not columnwise:
         numbers = np.array(elements[:-1]).astype(np.int32).transpose()
