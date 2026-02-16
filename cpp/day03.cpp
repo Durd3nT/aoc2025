@@ -5,7 +5,7 @@
 #include <ranges>
 
 
-void read_input(const std::string filepath, std::vector<std::string> & data) {
+void readInput(const std::string filepath, std::vector<std::string> & data) {
     std::ifstream inFile(filepath);
     std::string val;
 
@@ -25,7 +25,7 @@ void read_input(const std::string filepath, std::vector<std::string> & data) {
  * @param b_string: string of digits
  * @param num_digits: How many digits to maximize
  */
-int64_t max_digits_string(std::string_view s, const int num_digits) {
+int64_t maxDigitsString(std::string_view s, const int num_digits) {
     int len_s = s.length();
     std::vector<char> max_digits(num_digits);
     max_digits[0] = s[0];
@@ -54,10 +54,10 @@ int64_t max_digits_string(std::string_view s, const int num_digits) {
     return max_int;
 }
 
-int64_t total_jolts(const std::vector<std::string> & data, const int num_digits) {
+int64_t totalJolts(const std::vector<std::string> & data, const int num_digits) {
     int64_t jolts = 0;
     for (auto s: data) {
-        jolts += max_digits_string(std::string_view(s), num_digits);
+        jolts += maxDigitsString(std::string_view(s), num_digits);
     }
     return jolts;
 }
@@ -67,9 +67,9 @@ int main() {
     std::string filepath = "../input/input03.txt";
     std::vector<std::string> data;
 
-    read_input(filepath, data);
-    int64_t jolts = total_jolts(data, 2);
-    int64_t big_jolts = total_jolts(data, 12);
+    readInput(filepath, data);
+    int64_t jolts = totalJolts(data, 2);
+    int64_t big_jolts = totalJolts(data, 12);
 
     std::println("maximum joltage with 2 batteries (part 1): {}", jolts);
     std::println("maximum joltage with 12 batteries (part 2): {}", big_jolts);

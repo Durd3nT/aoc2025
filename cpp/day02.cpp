@@ -33,7 +33,7 @@ static constexpr int64_t pow10[] = {
     1'000'000'000'000'000'000LL
 };
 
-void read_input(const std::string filepath, std::vector<std::vector<int64_t>> & data) {
+void readInput(const std::string filepath, std::vector<std::vector<int64_t>> & data) {
     std::ifstream inFile(filepath);
     std::string val;
 
@@ -48,14 +48,14 @@ void read_input(const std::string filepath, std::vector<std::vector<int64_t>> & 
     } else { std::println("ERROR: could not open file"); }
 }
 
-int digit_cnt(int64_t number) {
+int digitCount(int64_t number) {
     int digits = 0;
     do { number /= 10; digits++; } while (number != 0);
     return digits;
 }
 
-bool int_pattern_repeats(const int64_t number, const int max_repeats) {
-    int len = digit_cnt(number);
+bool intPatternRepeats(const int64_t number, const int max_repeats) {
+    int len = digitCount(number);
     int num_repeats = max_repeats;
     if (max_repeats > len or max_repeats < 0) {
         num_repeats = len;
@@ -92,7 +92,7 @@ bool int_pattern_repeats(const int64_t number, const int max_repeats) {
  * @param max_repeats: maximum repetitions of blocks / patterns we look for in all strings.
  *  If negative, it is set to the number of digits in the integer
 */
-int64_t find_patterns(
+int64_t findPatterns(
     const std::vector<std::vector<int64_t>> & ranges,
     const int & max_repeats
 ) {
@@ -100,7 +100,7 @@ int64_t find_patterns(
     
     for (const auto & range: ranges) {
         for (const int64_t i: std::views::iota(range[0], range[1] + 1)) {
-            bool repeats = int_pattern_repeats(i, max_repeats);
+            bool repeats = intPatternRepeats(i, max_repeats);
             if (repeats) {
                 invalid.insert(i);
             }
@@ -113,9 +113,9 @@ int64_t find_patterns(
 }
 
 /**
- * Same as `find_patterns`, but working on strings rather than integers.
+ * Same as `findPatterns`, but working on strings rather than integers.
  */
-int64_t find_string_patterns(
+int64_t findStringPatterns(
     const std::vector<std::vector<int64_t>> & ranges,
     const int & max_repeats
 ) {
@@ -166,12 +166,12 @@ int main() {
     std::string filepath = "../input/input02.txt";
     std::vector<std::vector<int64_t>> ranges;
 
-    read_input(filepath, ranges);
+    readInput(filepath, ranges);
 
     int64_t sum_double_invalids, sum_all_invalids;
 
-    sum_double_invalids = find_patterns(ranges, 2);
-    sum_all_invalids = find_patterns(ranges, -1);
+    sum_double_invalids = findPatterns(ranges, 2);
+    sum_all_invalids = findPatterns(ranges, -1);
 
     std::println("sum of IDs with double patterns (part 1): {}", sum_double_invalids);
     std::println("sum of IDs with multi patterns (part 2): {}", sum_all_invalids);

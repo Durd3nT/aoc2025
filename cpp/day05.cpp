@@ -11,7 +11,7 @@
 #include "aoc_utils.hpp"
 
 
-void read_input(
+void readInput(
     const std::string filepath,
     std::vector<std::vector<int64_t>> & ranges,
     std::vector<int64_t> & ids
@@ -37,19 +37,19 @@ void read_input(
     } else { std::println("ERROR: could not open file"); }
 }
 
-int random_int(int min, int max) {
+int randomInt(int min, int max) {
     static std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution<int> dist(min, max);
     return dist(gen);
 }
 
-size_t hoare_partition(
+size_t hoarePartition(
     const std::vector<int64_t> & A,
     std::vector<size_t> & idx,
     size_t low,
     size_t high
 ) {
-    int64_t pivot = A[idx[random_int(low, high)]];
+    int64_t pivot = A[idx[randomInt(low, high)]];
     std::ptrdiff_t i = static_cast<std::ptrdiff_t>(low) - 1;
     std::ptrdiff_t j = static_cast<std::ptrdiff_t>(high) + 1;
 
@@ -75,14 +75,14 @@ void quicksort(
     size_t high
 ) {
     if (low < high) {
-        size_t p = hoare_partition(A, idx, low, high);
+        size_t p = hoarePartition(A, idx, low, high);
         if (p == high) { --p; }
         quicksort(A, idx, low, p);
         quicksort(A, idx, p + 1, high);
     }
 }
 
-std::vector<int64_t> sort_vector(const std::vector<int64_t> & A) {
+std::vector<int64_t> sortVector(const std::vector<int64_t> & A) {
     std::vector<size_t> idx(A.size());
     std::iota(idx.begin(), idx.end(), 0);
     quicksort(A, idx, 0, A.size() - 1);
@@ -103,7 +103,7 @@ std::vector<int64_t> sort_vector(const std::vector<int64_t> & A) {
  * @param ranges: list of all, potentially overlapping, ranges
  * @param combined_ranges: vector to store the resulting ranges
  */
-void sort_combine_ranges(
+void sortCombineRanges(
     const std::vector<std::vector<int64_t>> & ranges,
     std::vector<std::vector<int64_t>> & combined_ranges
 ) {
@@ -178,11 +178,11 @@ int main() {
     std::vector<std::vector<int64_t>> ranges;
     std::vector<int64_t> ids;
 
-    read_input(filepath, ranges, ids);
+    readInput(filepath, ranges, ids);
 
     std::vector<std::vector<int64_t>> combined_ranges;
-    sort_combine_ranges(ranges, combined_ranges);
-    std::vector<int64_t> sorted_ids = sort_vector(ids);
+    sortCombineRanges(ranges, combined_ranges);
+    std::vector<int64_t> sorted_ids = sortVector(ids);
 
     int64_t num_valid_ids = filter_valid_ids(combined_ranges, sorted_ids);
     int64_t num_all_valid_ids = all_valid_ids(combined_ranges);

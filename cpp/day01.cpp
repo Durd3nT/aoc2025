@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 
-void read_input(const std::string filepath, std::vector<int> & data) {
+void readInput(const std::string filepath, std::vector<int> & data) {
     std::ifstream inFile(filepath);
     std::string val;
 
@@ -27,7 +27,7 @@ void read_input(const std::string filepath, std::vector<int> & data) {
  * @param zero_cnt: counts how often dial stops at zero position
  * @param zero_passed_cnt: counts how often dial passes zero position without stopping
 */
-void cnt_zeros(
+void countZeros(
     const std::vector<int> & clicks,
     const int & pos_init,
     int & zero_cnt,
@@ -59,12 +59,12 @@ int main() {
     std::string filepath = "../input/input01.txt";
     std::vector<int> clicks;
 
-    read_input(filepath, clicks);
+    readInput(filepath, clicks);
 
     int dial_init = 50;
     int zero_cnt = 0;
     int zero_passed_cnt = 0;
-    cnt_zeros(clicks, dial_init, zero_cnt, zero_passed_cnt);
+    countZeros(clicks, dial_init, zero_cnt, zero_passed_cnt);
 
     std::println("Dial landed on / passed zero: {} / {}", zero_cnt, zero_passed_cnt);
     std::println("Total: {}", zero_cnt + zero_passed_cnt);

@@ -6,7 +6,7 @@
 #include <numeric>
 
 
-void read_input(const std::string filepath, std::vector<bool> & data, std::vector<int> & dims) {
+void readInput(const std::string filepath, std::vector<bool> & data, std::vector<int> & dims) {
     std::ifstream inFile(filepath);
 
     if (inFile.is_open()) {
@@ -42,7 +42,7 @@ void read_input(const std::string filepath, std::vector<bool> & data, std::vecto
  * @param roll_cnts: the target vector that is populated iteratively, with elements being the
  *  number of rolls removed at each iteration
  */
-void find_remove_rolls(
+void findRemoveRolls(
     std::vector<bool> & coords,
     const std::vector<int> & dims,
     std::vector<int> & roll_cnts
@@ -95,10 +95,10 @@ int main() {
     std::vector<bool> coords;
     std::vector<int> dims;
 
-    read_input(filepath, coords, dims);
+    readInput(filepath, coords, dims);
 
     std::vector<int> roll_cnts;
-    find_remove_rolls(coords, dims, roll_cnts);
+    findRemoveRolls(coords, dims, roll_cnts);
     auto tot_roll_cnts = std::reduce(roll_cnts.begin(), roll_cnts.end());
 
     std::println("rolls removed in first iteration (part 1): {}", roll_cnts[0]);
