@@ -51,7 +51,6 @@ def combine_numbers(elements, columnwise=False):
             elif ops[i] == "*":
                 res += np.prod(col)
     else:
-        res = 0
         op = ''
         for col in elements:
             if not col[-1] == ' ':

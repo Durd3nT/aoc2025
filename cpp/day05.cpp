@@ -117,7 +117,7 @@ void sortCombineRanges(
     quicksort(range_starts, idx, 0, ranges.size() - 1);
 
     combined_ranges.push_back(ranges[idx[0]]);
-    for (auto i : idx | std::views::drop(1)) {
+    for (auto i : idx | std::views::drop(1)) { // drop first element of vector idx
         if (!combined_ranges.empty() && ranges[i][0] <= combined_ranges.back()[1]) {
             combined_ranges.back()[1] = std::max(combined_ranges.back()[1], ranges[i][1]);
         } else {
