@@ -4,7 +4,7 @@ use std::io::{BufRead, BufReader};
 
 #[pyfunction]
 pub fn read_input(filepath: &str) -> Vec<i32> {
-    let file = File::open(filepath).unwrap();
+    let file = File::open(filepath).expect("could not open file");
     let reader = BufReader::new(file);
 
     let mut data: Vec<i32> = Vec::new();
@@ -13,7 +13,7 @@ pub fn read_input(filepath: &str) -> Vec<i32> {
         match line {
             Ok(val) => {
                 let dir = &val[0..1];
-                let num: i32 = val[1..].parse().unwrap();
+                let num: i32 = val[1..].parse().expect("could not parse number");
 
                 if dir == "R" {
                     data.push(num);

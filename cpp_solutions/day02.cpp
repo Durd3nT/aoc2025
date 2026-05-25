@@ -49,6 +49,8 @@ void readInput(const std::string filepath, std::vector<std::vector<int64_t>> & d
 }
 
 int digitCount(int64_t number) {
+    // count digits by dividing integer by 10 until it becomes 0
+    // (since ints are always truncated, e.g., 0.1 becomes 0)
     int digits = 0;
     do { number /= 10; digits++; } while (number != 0);
     return digits;
