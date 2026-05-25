@@ -26,7 +26,7 @@ class TestDay05(unittest.TestCase):
         self.assertEqual(sorted_combined_ranges, expected)
 
     def test_valid_ids(self):
-        ranges, ids = day05.read_inputs(filepath="../../input/test05.txt")
+        ranges, ids = day05.read_input(filepath="../../input/test05.txt")
         ids_idx = np.argsort(ids)
         sorted_ids = [ids[idx] for idx in ids_idx]
         sorted_combined_ranges = day05.sort_combine_ranges(ranges)

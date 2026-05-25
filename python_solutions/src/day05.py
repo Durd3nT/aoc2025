@@ -3,7 +3,7 @@ start_time = time.time()
 import random
 # import numpy as np
 
-def read_inputs(filepath):
+def read_input(filepath):
     """
     Reads data from input file in the respective format.
     

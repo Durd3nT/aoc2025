@@ -13,7 +13,7 @@ class TestDay03(unittest.TestCase):
         ["part2", 12, 3121910778619]
     ])
     def test_find_max_digits_(self, name, length, expected):
-        batteries = day03.read_inputs(filepath="../../input/test03.txt")
+        batteries = day03.read_input(filepath="../../input/test03.txt")
 
         max_digits = []
         for b in batteries:

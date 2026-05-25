@@ -12,7 +12,7 @@ class TestDay06(unittest.TestCase):
         ["part2", True, 3263827]
     ])
     def test_combine_numbers(self, name, columnwise, expected):
-        elements = day06.read_inputs(filepath="../../input/test06.txt", columnwise=columnwise)
+        elements = day06.read_input(filepath="../../input/test06.txt", columnwise=columnwise)
         total = day06.combine_numbers(elements, columnwise=columnwise)
 
         self.assertEqual(total, expected)

@@ -1,7 +1,7 @@
 import time
 start_time = time.time()
 
-def read_inputs(filepath):
+def read_input(filepath):
     """
     Reads data from input file in the respective format.
     
