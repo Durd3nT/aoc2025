@@ -4,7 +4,7 @@ My solutions to [Advent of Code 2025](https://adventofcode.com/2025) - in Rust, 
 In some cases, the Python code is used to prototype and get a result simply by solving the puzzle, without too much code optimization.
 
 #### Rust:
-To compile and run all rust binaries, use `cargo run` from the root of `rust_solutions`. For individual binaries, run `cargo run --bin DAYXX` replacing `DAYXX` with, e.g., `day01`.
+To compile and run the binary for a specific day (e.g., day01), use `cargo run --bin day01` from the root of `rust_solutions`.
 
 Tests for the Rust solutions are implemented in Python in order to keep tests concise. To test Rust files in Python `maturin` has to be installed via `pip`. After, first `cargo build`, then `maturin develop` to build the Rust-Python interface. Now, Python tests can be run normally (see below).
 
