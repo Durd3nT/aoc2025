@@ -1,6 +1,8 @@
+use pyo3::prelude::*;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+#[pyfunction]
 pub fn read_input(filepath: &str) -> Vec<i32> {
     let file = File::open(filepath).unwrap();
     let reader = BufReader::new(file);
@@ -28,12 +30,13 @@ pub fn read_input(filepath: &str) -> Vec<i32> {
     data
 }
 
-pub fn count_zeros(clicks: &Vec<i32>) -> (usize, usize) {
+#[pyfunction]
+pub fn count_zeros(clicks: Vec<i32>) -> (usize, usize) {
     let mut dial = 50;
     let mut zero_cnt = 0;
     let mut zero_passed_cnt = 0;
 
-    for &c in clicks {
+    for c in clicks {
         let new_dial = (dial + c).rem_euclid(100); // true modulo (for negative numbers)
         let full_rotations = (c.abs() / 100) as usize;
         zero_passed_cnt += full_rotations;

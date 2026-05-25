@@ -7,7 +7,7 @@ fn main() {
     
     let data = day01::read_input(filepath);
 
-    let (zero_cnt, zero_passed_cnt) = day01::count_zeros(&data);
+    let (zero_cnt, zero_passed_cnt) = day01::count_zeros(data);
 
     println!("Dial landed on / passed zero: {} / {}", zero_cnt, zero_passed_cnt);
     println!("Total: {}", zero_cnt + zero_passed_cnt);
