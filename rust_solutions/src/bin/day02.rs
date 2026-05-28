@@ -2,7 +2,7 @@ use rust_solutions::day02;
 use std::path::Path;
 
 fn main() {
-    let filepath = "../input/test02.txt";
+    let filepath = "../input/input02.txt";
     println!("{:?}", Path::new(filepath).canonicalize());
     
     let data = day02::read_input(filepath);
