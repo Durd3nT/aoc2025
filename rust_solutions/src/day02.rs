@@ -26,10 +26,10 @@ const POW10: [i64; 19] = [
 ];
 
 /// Reads the input file and returns a vector of [start, end] pairs of ID ranges.
-/// 
+///
 /// @param filepath: path to the input file containing ID ranges in the format
 ///     "start-end,start-end,..."
-/// 
+///
 /// @return a vector of [start, end] pairs of ID ranges
 #[pyfunction]
 pub fn read_input(filepath: &str) -> Vec<Vec<i64>> {
@@ -58,9 +58,9 @@ pub fn read_input(filepath: &str) -> Vec<Vec<i64>> {
 }
 
 /// Counts the number of digits in the given integer.
-/// 
+///
 /// @param number: the integer to count digits of
-/// 
+///
 /// @return the number of digits in the integer
 #[pyfunction]
 pub fn digit_count(mut number: i64) -> i32 {
@@ -74,11 +74,11 @@ pub fn digit_count(mut number: i64) -> i32 {
 
 /// Checks if the given number has a repeated pattern of digits with up to max_repeats repeats.
 /// For example, 123123 has a repeated pattern of "123" repeated twice.
-/// 
+///
 /// @param number: the number to check for repeated patterns
 /// @param max_repeats: maximum number of repeats to check for (e.g., 2 for patterns repeated twice)
 ///     for negative values (-1), check for any patterns
-/// 
+///
 /// @return true if the number has a repeated pattern, false otherwise
 #[pyfunction]
 pub fn is_repeated_pattern(number: i64, max_repeats: i32) -> bool {
@@ -113,13 +113,13 @@ pub fn is_repeated_pattern(number: i64, max_repeats: i32) -> bool {
 
 /// Returns the sum of IDs within ranges that have repeated patterns
 /// with max_repeats setting the maximum number of repeats to check for.
-/// 
+///
 /// Note: cannot pass by reference if we want to interface with Python.
-/// 
+///
 /// @param ranges: list of [start, end] pairs of ID ranges to check
 /// @param max_repeats: maximum number of repeats to check for (e.g., 2 for patterns repeated twice)
 ///     for negative values (-1), check for any patterns
-/// 
+///
 /// @return sum of IDs that have repeated patterns
 #[pyfunction]
 pub fn find_repeated_patterns(ranges: Vec<Vec<i64>>, max_repeats: i32) -> i64 {

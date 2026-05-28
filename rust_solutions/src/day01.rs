@@ -41,9 +41,7 @@ pub fn count_zeros(clicks: Vec<i32>) -> (usize, usize) {
         let full_rotations = (c.abs() / 100) as usize;
         zero_passed_cnt += full_rotations;
 
-        if ((new_dial > dial && c < 0) || (new_dial < dial && c > 0))
-            && new_dial != 0
-            && dial != 0
+        if ((new_dial > dial && c < 0) || (new_dial < dial && c > 0)) && new_dial != 0 && dial != 0
         {
             zero_passed_cnt += 1;
         }

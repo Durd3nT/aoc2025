@@ -4,7 +4,7 @@ use std::path::Path;
 fn main() {
     let filepath = "../input/input02.txt";
     println!("{:?}", Path::new(filepath).canonicalize());
-    
+
     let data = day02::read_input(filepath);
 
     // cannot pass by reference if we want to interface with Python.
