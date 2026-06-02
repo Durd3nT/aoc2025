@@ -28,13 +28,12 @@ void readInput(const std::string filepath, std::vector<std::string> & data) {
 int64_t maxDigitsString(std::string_view s, const int num_digits) {
     int len_s = s.length();
     std::vector<char> max_digits(num_digits);
-    max_digits[0] = s[0];
     std::vector<int> max_idx(num_digits, 0);
 
     for (const int k: std::views::iota(0, num_digits)) {
         int start;
         if (k == 0) {
-            start = max_idx[0] + 1;
+            start = 0;
         } else {
             start = max_idx[k - 1] + 1;
         }

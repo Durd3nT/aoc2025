@@ -28,11 +28,11 @@ def find_max_digits(b_string, num_digits):
     b = [int(x) for x in b_string]
 
     max_digits = [0] * num_digits
-    max_digits[0] = b[0]
+    # max_digits[0] = b[0]
     max_idx = [0] * num_digits
 
     for k in range(num_digits):
-        start = max_idx[0] + 1 if k == 0 else max_idx[k - 1] + 1
+        start = 0 if k == 0 else max_idx[k - 1] + 1
         for i in range(start, len(b) - num_digits + k + 1):
             if b[i] > max_digits[k]:
                 max_digits[k] = b[i]
@@ -41,7 +41,7 @@ def find_max_digits(b_string, num_digits):
     return max_digits
 
 if __name__ == "__main__":
-    batteries = read_inputs(filepath = "../../input/input03.txt")
+    batteries = read_input(filepath = "../../input/input03.txt")
 
     max_digits = []
     for b in batteries:

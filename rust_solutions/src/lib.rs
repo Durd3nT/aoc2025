@@ -35,6 +35,7 @@ fn rust_solutions(m: &Bound<'_, PyModule>) -> PyResult<()> {
         day03::max_digit_from_string,
         &day03_module
     )?)?;
+    day03_module.add_function(wrap_pyfunction!(day03::total_jolts, &day03_module)?)?;
 
     m.add_submodule(&day03_module)?;
 
