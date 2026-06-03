@@ -3,6 +3,7 @@ use pyo3::prelude::*;
 pub mod day01;
 pub mod day02;
 pub mod day03;
+pub mod day04;
 
 #[pymodule]
 fn rust_solutions(m: &Bound<'_, PyModule>) -> PyResult<()> {
@@ -38,6 +39,14 @@ fn rust_solutions(m: &Bound<'_, PyModule>) -> PyResult<()> {
     day03_module.add_function(wrap_pyfunction!(day03::total_jolts, &day03_module)?)?;
 
     m.add_submodule(&day03_module)?;
+
+    // day03 module
+    let day04_module = PyModule::new(m.py(), "day04")?;
+
+    day04_module.add_function(wrap_pyfunction!(day04::read_input, &day04_module)?)?;
+    day04_module.add_class::<day04::Grid>()?;
+
+    m.add_submodule(&day04_module)?;
 
     //
     Ok(())
