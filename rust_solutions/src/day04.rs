@@ -9,6 +9,16 @@ pub struct Grid {
     pub ylen: usize,
 }
 
+// impl Grid {
+//     fn xlen(&self) -> usize {
+//         self.xlen
+//     }
+
+//     fn ylen(&self) -> usize {
+//         self.ylen
+//     }
+// }
+
 /// Reads the input file and returns a vector of strings of long integers.
 ///
 /// @param filepath: path to the input file containing long integers, one per line
@@ -40,11 +50,11 @@ pub fn read_input(filepath: &str) -> Grid {
     Grid { data, xlen, ylen }
 }
 
-#[pyfunction]
-pub fn find_remove_rolls(grid: &Grid) -> (i32, i32) {
-    let mut roll_cnts: Vec<i32> = vec![0];
+// #[pyfunction]
+// pub fn find_remove_rolls(grid: &Grid) -> (i32, i32) {
+//     let mut roll_cnts: Vec<i32> = vec![0];
 
-    let tot_roll_cnts: i32 = roll_cnts.iter().sum();
+//     let tot_roll_cnts: i32 = roll_cnts.iter().sum();
 
-    (roll_cnts[0], tot_roll_cnts)
-}
+//     (roll_cnts[0], tot_roll_cnts)
+// }

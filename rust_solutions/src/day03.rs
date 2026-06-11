@@ -43,8 +43,7 @@ pub fn max_digit_from_string(s: &str, len_max_int: usize) -> i64 {
     if s.is_empty() || len_s < len_max_int {
         println!(
             "integer string s is empty or len_max_int ({}) larger than s ({})",
-            len_max_int,
-            len_s
+            len_max_int, len_s
         );
         return 0;
     }
@@ -55,11 +54,7 @@ pub fn max_digit_from_string(s: &str, len_max_int: usize) -> i64 {
     let mut max_idx: Vec<usize> = vec![0; len_max_int];
 
     for k in 0..len_max_int {
-        let start: usize = if k == 0 {
-            0
-        } else {
-            max_idx[k-1] + 1
-        };
+        let start: usize = if k == 0 { 0 } else { max_idx[k - 1] + 1 };
 
         for i in start..(len_s - len_max_int + k + 1) {
             if digits_vec[i] > max_digits[k] {
@@ -69,8 +64,10 @@ pub fn max_digit_from_string(s: &str, len_max_int: usize) -> i64 {
         }
     }
 
-    // fold() collects elements from iter() based on an initial value and a lambda for combining elements 
-    let max_int: i64 = max_digits.iter().fold(0i64, |tot, &c| tot * 10 + (c as i64 - '0' as i64));
+    // fold() collects elements from iter() based on an initial value and a lambda for combining elements
+    let max_int: i64 = max_digits
+        .iter()
+        .fold(0i64, |tot, &c| tot * 10 + (c as i64 - '0' as i64));
 
     max_int
 }
@@ -82,7 +79,8 @@ pub fn total_jolts(data: Vec<String>, len_max_int: usize) -> i64 {
         return 0;
     }
 
-    let jolts: i64 = data.iter()
+    let jolts: i64 = data
+        .iter()
         .map(|s| max_digit_from_string(s, len_max_int))
         .sum();
 

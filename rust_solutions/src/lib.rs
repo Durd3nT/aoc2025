@@ -5,6 +5,8 @@ pub mod day02;
 pub mod day03;
 pub mod day04;
 
+pub mod day07;
+
 #[pymodule]
 fn rust_solutions(m: &Bound<'_, PyModule>) -> PyResult<()> {
     // day01 module
