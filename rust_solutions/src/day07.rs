@@ -2,19 +2,23 @@ use pyo3::prelude::*;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+#[pyclass(skip_from_py_object)]
 #[derive(Clone)]
 pub struct Grid {
     splitter_coords: Vec<(usize, Vec<usize>)>,
     init_beam: usize,
     xdim: usize,
-    ydim: usize,
 }
 
-/// Reads the input file and returns a vector of strings of long integers.
+/// Reads the input file and returns a `Grid` object, storing the coordinates of the
+/// beam splitters in a vector of the format (y, [x_coords]) in (`Grid::splitter_coords`),
+/// the x-coordinate of the initial beam (`Grid::init_beam`), and the length of the
+/// grid's x-dimension (`Grid::xdim`).
 ///
 /// @param filepath: path to the input file containing long integers, one per line
 ///
 /// @return an instance of Grid
+#[pyfunction]
 pub fn read_input(filepath: &str) -> Grid {
     let file = File::open(filepath).expect("could not open file");
     let reader = BufReader::new(file);
@@ -22,7 +26,6 @@ pub fn read_input(filepath: &str) -> Grid {
     let mut splitter_coords: Vec<(usize, Vec<usize>)> = Vec::new();
     let mut init_beam: usize = 0;
     let mut xdim: usize = 0;
-    let mut ydim: usize = 0;
 
     for (y, line) in reader.lines().enumerate() {
         let val = line.expect("Error reading line");
@@ -42,24 +45,29 @@ pub fn read_input(filepath: &str) -> Grid {
                 splitter_coords.push((y, x_coords));
             }
         }
-        ydim += 1;
     }
 
     Grid {
         splitter_coords,
         init_beam,
         xdim,
-        ydim,
     }
 }
 
-// For part 1: Could also come the other way around and loop through all x-coords of previous beam
-// (initialized with the first entering beam) and then check if the x-coords are in the
-// next row of beam splitter coords
-
-// For part 2: Use dynamic programming to count how many possible paths the initial beam
-// could take through all splitters (see example below)
-pub fn count_beam_splits(grid_data: Grid) -> (usize, usize) {
+/// For part 1: Could also come the other way around and loop through all x-coords of previous
+/// beam (initialized with the first entering beam) and then check if the x-coords are in the
+/// next row of beam splitter coords
+///
+/// For part 2: Use dynamic programming to count how many possible paths the initial beam
+/// could take through all splitters (see example below)
+/// 
+/// @param grid_data: an instance of Grid
+/// 
+/// @return a tuple `(number_of_beamsplits, number_of_timelines)` containing the number of
+/// times that the initial beam is split (`number_of_beamsplits`, part 1) and the total number of
+/// possible paths that the initial beam can take (`number_of_timelines`, part 2)
+#[pyfunction]
+pub fn count_beam_splits(grid_data: &Grid) -> (usize, usize) {
     let mut cnt: usize = 0;
     let xdim = grid_data.xdim;
 
@@ -90,7 +98,6 @@ pub fn count_beam_splits(grid_data: Grid) -> (usize, usize) {
 
     (cnt, dp_timelines.iter().sum())
 }
-
 
 
 // Example DP for counting possible all beam paths:

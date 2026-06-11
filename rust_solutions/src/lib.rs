@@ -42,7 +42,7 @@ fn rust_solutions(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
     m.add_submodule(&day03_module)?;
 
-    // day03 module
+    // day04 module
     let day04_module = PyModule::new(m.py(), "day04")?;
 
     day04_module.add_function(wrap_pyfunction!(day04::read_input, &day04_module)?)?;
@@ -50,6 +50,13 @@ fn rust_solutions(m: &Bound<'_, PyModule>) -> PyResult<()> {
 
     m.add_submodule(&day04_module)?;
 
+    // day07 module
+    let day07_module = PyModule::new(m.py(), "day07")?;
+    day07_module.add_class::<day07::Grid>()?;
+    day07_module.add_function(wrap_pyfunction!(day07::read_input, &day07_module)?)?;
+    day07_module.add_function(wrap_pyfunction!(day07::count_beam_splits, &day07_module)?)?;
+
+    m.add_submodule(&day07_module)?;
     //
     Ok(())
 }
